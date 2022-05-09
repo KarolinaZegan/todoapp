@@ -1,25 +1,43 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Form from './components/Form';
+import TodoList from './components/TodoList';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
+  state = {
+    inputText: '',
+    todos: [],
+  };
 
-export default App;
+  setTodos = (value) => {
+    console.log('value w set', value);
+    this.setState({
+      todos: [...this.state.todos, value],
+    });
+  };
+
+  setInputText = (value) => {
+    this.setState({
+      inputText: value,
+    });
+  };
+
+  render() {
+    return (
+      <div className='App container'>
+        <div className='row'>
+          <div className='col-6'>
+            <h1>My Todo List</h1>
+            <Form
+              inputText={this.state.inputText}
+              todos={this.state.todos}
+              setTodos={this.setTodos}
+              setInputText={this.setInputText}
+            />
+            <TodoList todos={this.state.todos} setTodos={this.setTodos} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
